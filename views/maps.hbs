@@ -5,16 +5,32 @@
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
     // lng, lat
-    center: [-99.1632279753685, 19.421167132441322],
-    zoom: 15
   });
-  const marker = new mapboxgl.Marker()
-    .setLngLat([-99.1632279753685, 19.421167132441322])
-    .addTo(map)
 
   map.addControl(new MapboxDirections({
     accessToken: mapboxgl.accessToken
   }), 'top-left');
 
-  map.addControl(new mapboxgl.NavigationControl());
+  if(navigator.geolocation){
+
+    navigator.geolocation.getCurrentPosition((position)=> {
+
+      const {longitude, latitude} = position.coords;
+      let user_position = [longitude, latitude]
+
+      map.setCenter(user_position).setZoom(15);
+
+      const marker = new mapboxgl.Marker()
+      .setLngLat(user_position)
+      .addTo(map)
+
+    }, (err) => {
+      console.log("No te dieron chance", err)
+    })
+
+  }else{
+    console.log("Usa chrome")
+  }
+
+  map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 </script>
