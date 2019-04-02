@@ -27,8 +27,12 @@
 
       map.setCenter(user_position).setZoom(15);
 
+      const popup = new mapboxgl.Popup()
+      .setText("Ironhack México")
+
       const marker = new mapboxgl.Marker()
       .setLngLat(user_position)
+      .setPopup(popup)
       .addTo(map)
 
     }, (err) => {
