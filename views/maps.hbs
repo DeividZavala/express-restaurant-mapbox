@@ -8,4 +8,13 @@
     center: [-99.1632279753685, 19.421167132441322],
     zoom: 15
   });
+  const marker = new mapboxgl.Marker()
+    .setLngLat([-99.1632279753685, 19.421167132441322])
+    .addTo(map)
+
+  map.addControl(new MapboxDirections({
+    accessToken: mapboxgl.accessToken
+  }), 'top-left');
+
+  map.addControl(new mapboxgl.NavigationControl());
 </script>
